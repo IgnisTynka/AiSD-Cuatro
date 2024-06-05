@@ -1,5 +1,5 @@
 #include "graph.h"
-#include "functions.h"
+#include "menu.h"
 
 #include <iostream>
 

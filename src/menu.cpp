@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "menu.h"
 
 #include <iostream>
 #include <vector>
@@ -15,8 +15,8 @@ void menu(Graph* graph) {
             std::cout << "Commands:" << std::endl;
             std::cout << "help \t\t Show this message" << std::endl;
             std::cout << "print \t\t Print the graph" << std::endl;
-            std::cout << "find_euler \t\t Check if euler path exist in graph" << std::endl;
-            std::cout << "find_hamilton \t\t Check if hamilton path exist in graph" << std::endl;
+            std::cout << "find_euler \t Check if euler path exist in graph" << std::endl;
+            std::cout << "find_hamilton \t Check if hamilton path exist in graph" << std::endl;
             std::cout << "export \t\t Export the graph to tikz" << std::endl;
     }
         else if (option == "print") {
@@ -46,8 +46,8 @@ void menu(Graph* graph) {
                 std::cout << std::endl;
             }
         }
-        else if (option == "export_tikz") {
-            exportToTikz(graph);
+        else if (option == "export") {
+            graph->exportToTikz();
         }
         else if (option == "exit") {
             std::cout << "Exiting..." << std::endl;

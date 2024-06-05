@@ -3,6 +3,12 @@
 #include <vector>
 #include <set>
 #include <stack>
+#include <iostream>
+#include <random>
+#include <chrono>
+#include <algorithm>
+#include <cmath>
+#include <fstream>
 
 class Graph {
 public:
@@ -12,7 +18,8 @@ public:
     void createNonHamilton(int nodes);
 
     void print();
-    
+    void exportToTikz();
+
     std::vector<int> hamiltonPath();
     std::vector<int> eulerPath();
 
@@ -22,5 +29,6 @@ protected:
 
 private:
     bool _isConnected();
+    bool _hamiltonPath(std::vector<int> &path, std::vector<bool> &visited, int startNode);
     void _eulerPath(std::vector<std::set<int>> &list, std::vector<int> &path, std::vector<int> &visited);
 };
