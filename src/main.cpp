@@ -4,32 +4,45 @@
 #include <iostream>
 
 int main(int argc, const char* argv[]){
-
     std::string mode = std::string(argv[1]);
-    Graph* graph;
+
+    int nodes;
+    std::cout << "nodes> ";
+    std::cin >> nodes;
+    std::cout << nodes << std::endl;
+
+    while(nodes < 1){
+        std::cout << "Number of nodes must be greater than 0" << std::endl;
+        std::cout << "nodes> ";
+        std::cin >> nodes;
+        std::cout << nodes << std::endl;
+    }
+    
+    Graph graph = Graph(nodes);
 
     if (mode == "--hamilton") {
-        int nodes;
-        float saturation;
-        std::cout << "Enter the number of nodes: ";
-        std::cin >> nodes;
-        std::cout << nodes << std::endl;
-        std::cout << "Enter the saturation: ";
+        int saturation;
+        std::cout << "saturation> ";
         std::cin >> saturation;
         std::cout << saturation << std::endl;
-        graph->createHamilton(nodes, saturation);
+
+        while(saturation != 30 && saturation != 70){
+            std::cout << "Saturation must be 30 or 10" << std::endl;
+            std::cout << "saturation> ";
+            std::cin >> saturation;
+            std::cout << saturation << std::endl;
+        }
+
+        float saturationRatio = saturation/100.0;
+        graph.createHamilton(nodes, saturationRatio);
     } else if (mode == "--non-hamilton") { 
-        int nodes;
-        std::cout << "Enter the number of nodes: ";
-        std::cin >> nodes;
-        std::cout << nodes << std::endl;
-        graph->createNonHamilton(nodes);
+        graph.createNonHamilton(nodes);
     } else {
         std::cout << "Invalid mode" << std::endl;
         return 1;
     }
 
-    menu(graph);
+    menu(&graph);
 
     return 0;
 }

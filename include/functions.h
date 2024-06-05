@@ -1,4 +1,4 @@
 #include "graph.h"
 
-void menu(Graph* graph) {};
-void exportToTix(Graph* graph) {};
+void menu(Graph* graph);
+void exportToTikz(Graph* graph);

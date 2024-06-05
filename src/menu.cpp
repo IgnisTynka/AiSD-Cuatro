@@ -17,7 +17,7 @@ void menu(Graph* graph) {
             std::cout << "print \t\t Print the graph" << std::endl;
             std::cout << "find_euler \t\t Check if euler path exist in graph" << std::endl;
             std::cout << "find_hamilton \t\t Check if hamilton path exist in graph" << std::endl;
-            std::cout << "export_tikz \t\t Export the graph to tikz" << std::endl;
+            std::cout << "export \t\t Export the graph to tikz" << std::endl;
     }
         else if (option == "print") {
             graph->print();
