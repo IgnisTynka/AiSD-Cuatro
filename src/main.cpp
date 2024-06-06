@@ -21,6 +21,12 @@ int main(int argc, const char* argv[]){
     Graph graph = Graph(nodes);
 
     if (mode == "--hamilton") {
+        while (nodes < 3) {
+            std::cout << "Number of nodes must be at least 3" << std::endl;
+            std::cout << "nodes> ";
+            std::cin >> nodes;
+            std::cout << nodes << std::endl;
+        }
         int saturation;
         std::cout << "saturation> ";
         std::cin >> saturation;

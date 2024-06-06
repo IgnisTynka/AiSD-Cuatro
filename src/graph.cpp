@@ -1,35 +1,84 @@
 #include "graph.h"
 
-
-
 void Graph::createHamilton(int nodes, float saturation) {
     _nodes = nodes;
     _list.resize(_nodes);
 
-    std::vector<int> nodesList = std::vector<int>(_nodes);
     for (int i = 0; i < _nodes; i++) {
-        nodesList[i] = i;
+        _list[i].insert((i+1)%_nodes);
+        _list[(i+1)%_nodes].insert(i);
+        int j = i + 1;
+        if (saturation == 0.f) {
+            continue;
+        }
+        for (int k = j; k < _nodes-1; k++) {
+            float p = (float)rand() / RAND_MAX;
+            if (p <= saturation) {
+                _list[i].insert(k);
+                _list[k].insert(i);
+            }
+        }
     }
-
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine rng(seed);
-    std::shuffle(nodesList.begin(), nodesList.end(), rng);
+    
+    for (int i = 0; i < _nodes; i++) {
+        if (_list[i].size() % 2 != 0) {
+            for (int j = i +1 ; j < _nodes; j++) {
+                if(_list[i].find(j) == _list[i].end() && _list[j].size() % 2 != 0) {
+                    _list[i].insert(j);
+                    _list[j].insert(i);
+                    break;
+                }
+            }
+        }
+    }
 
     for (int i = 0; i < _nodes-1; i++) {
-        _list[nodesList[i]].insert(nodesList[i+1]);
-        _list[nodesList[i+1]].insert(nodesList[i]);
+        if (_list[i].size() % 2 != 0) {
+            _list[i].insert(_nodes-1);
+            _list[_nodes-1].insert(i);
+        }
     }
-    _list[nodesList[_nodes-1]].insert(nodesList[0]);
-    _list[nodesList[0]].insert(nodesList[_nodes-1]);
-
-
 }
 
 void Graph::createNonHamilton(int nodes) {
     float saturation = 0.5;
-    createHamilton(nodes-1, saturation);
     _nodes = nodes;
-    _list.resize(_nodes);
+    _list.resize(_nodes);  
+
+    for (int i = 0; i < _nodes-1; i++) {
+        _list[i].insert((i+1)%(_nodes-1));
+        _list[(i+1)%(_nodes-1)].insert(i);
+        int j = i + 1;
+        if (saturation == 0.f) {
+            continue;
+        }
+        for (int k = j; k < _nodes-1; k++) {
+            float p = (float)rand() / RAND_MAX;
+            if (p <= saturation) {
+                _list[i].insert(k);
+                _list[k].insert(i);
+            }
+        }
+    }
+    
+    for (int i = 0; i < _nodes-1; i++) {
+        if (_list[i].size() % 2 != 0) {
+            for (int j = i +1 ; j < _nodes-1; j++) {
+                if(_list[i].find(j) == _list[i].end() && _list[j].size() % 2 != 0) {
+                    _list[i].insert(j);
+                    _list[j].insert(i);
+                    break;
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i < _nodes-2; i++) {
+        if (_list[i].size() % 2 != 0) {
+            _list[i].insert(_nodes-2);
+            _list[_nodes-2].insert(i);
+        }
+    } 
 }
 
 void Graph::print() {
@@ -59,7 +108,7 @@ void Graph::exportToTikz() {
 
     double radius = 3.0;
     for(int i = 0; i < _nodes; i++){
-        double angle = 2 * 314 * i / _nodes;
+        double angle = 2 * 3.14 * i / _nodes;
         double x = radius * cos(angle);
         double y = radius * sin(angle);
         file << "\t\\node[shape=circle] (" << i + 1 << ") at (" << x << "," << y << ") {" << i + 1 << "};" << std::endl;

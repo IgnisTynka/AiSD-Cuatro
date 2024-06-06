@@ -28,6 +28,7 @@ protected:
     std::vector<std::set<int>> _list;
 
 private:
+    // void shuffle(std::vector<int> &v);
     bool _isConnected();
     bool _hamiltonPath(std::vector<int> &path, std::vector<bool> &visited, int startNode);
     void _eulerPath(std::vector<std::set<int>> &list, std::vector<int> &path, std::vector<int> &visited);
